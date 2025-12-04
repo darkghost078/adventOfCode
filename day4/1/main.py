@@ -1,5 +1,5 @@
 import copy
-fich = open('test', 'r')
+fich = open('entrega', 'r')
 
 def obtener8vecinos(matriz,fila,columna):
     vecinos=0
@@ -56,8 +56,13 @@ def obtener8vecinos(matriz,fila,columna):
     return vecinos
 
 
-
-
+def matrizVecinos(matriz):
+    matrizres=copy.deepcopy(matriz)
+    for fila in range(len(matriz)):
+        for col in range(len(matriz[fila])):
+            vecinos=obtener8vecinos(matriz,fila,col)
+            matrizres[fila][col]=vecinos
+    return matrizres
 
 
 matriz=[]
@@ -83,19 +88,20 @@ for fila in range(len(matriz)):
     print()
 
 print()
-matrizres=copy.deepcopy(matriz)
-for fila in range(len(matriz)):
-    for col in range(len(matriz[fila])):
-        vecinos=obtener8vecinos(matriz,fila,col)
-        matrizres[fila][col]=vecinos
-        print(matrizres[fila][col], end="")
 
-    print()
+
+
+papelQuitado=True
+
 contador=0
-
-for fila in range(len(matrizres)):
-    for col in range(len(matrizres[fila])):
-        if(matrizres[fila][col]<4 and matriz[fila][col]!=0):
-            contador+=1
+while(papelQuitado):
+    papelQuitado=False
+    matrizres=matrizVecinos(matriz)
+    for fila in range(len(matrizres)):
+        for col in range(len(matrizres[fila])):
+            if(matrizres[fila][col]<4 and matriz[fila][col]!=0):
+                contador+=1
+                matriz[fila][col]=0
+                papelQuitado=True
 
 print(contador)
